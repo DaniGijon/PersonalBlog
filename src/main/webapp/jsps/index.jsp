@@ -9,7 +9,7 @@
 </head>
 <body>
 	<form id="formLength" action="/PersonalBlog/HomepageServlet" method="GET"">
-		<h3>Hi there!</h3>
+		<h3>Personal Blog</h3>
 	
 		<div>
 			<input type="submit" id="blog_submit" name="blog_submit" value="Submit"></input>
@@ -17,23 +17,16 @@
 		
 	</form>
 	
-	<h5>
 		
-		<% 
-			
-	       // Object listArticles = request.getAttribute("listArticles");
-		
-	        //out.println(listArticles);
-            
-        %>
-        <table>
-			<c:forEach items="${listArticles}" var="article">
-			    ${article.title}<br>
-			    ${article.content}<br>
-			</c:forEach>
-
-		</table>
-     </h5>
+    <table>
+		<c:forEach items="${listArticles}" var="article">
+			<tr>
+			    <td>${article.title}</td>
+			    <td>${article.createdAt}</td>
+		    </tr>
+		</c:forEach>
+	
+	</table>
      
 </body>
 </html>

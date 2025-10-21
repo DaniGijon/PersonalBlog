@@ -16,8 +16,8 @@ import entities.BlogEnArticle;
 public class HomepageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	BlogEnArticle article1 = new BlogEnArticle("Titulo 1", "Contenido del articulo numero 1");
-	BlogEnArticle article2 = new BlogEnArticle("Titulo 2", "Contenido del articulo numero 2");
+	BlogEnArticle article1 = new BlogEnArticle("My first article", "Content of my first article");
+	BlogEnArticle article2 = new BlogEnArticle("My second article", "Content of my second article");
 	List <BlogEnArticle> listArticles = new ArrayList<>();
        
     /**
@@ -36,12 +36,12 @@ public class HomepageServlet extends HttpServlet {
 		listArticles.add(article2);
 		   
 	    request.setAttribute("listArticles", listArticles);
-	    request.setAttribute("trampa", article1.getTitle());
 		
         // Dispatch the request to the JSP page
         RequestDispatcher dispatcher = request.getRequestDispatcher("/jsps/index.jsp");
         dispatcher.forward(request, response);
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
+        listArticles.clear();
 	}
 
 	/**

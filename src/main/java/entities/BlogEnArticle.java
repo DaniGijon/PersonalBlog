@@ -1,6 +1,7 @@
 package entities;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class BlogEnArticle {
 
@@ -8,13 +9,15 @@ public class BlogEnArticle {
 	private int id;
 	private String title;
 	private String content;
-	private LocalDateTime createdAt;
+	private String createdAt;
+	private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM d, YYYY");
 	
 	public BlogEnArticle(String title, String content) {
 		id = ++id;
 		this.title = title;
 		this.content = content;
-		createdAt = LocalDateTime.now();
+		createdAt = LocalDateTime.now().format(formatter);
+		createdAt = createdAt.substring(0, 1).toUpperCase() + createdAt.substring(1);
 	}
 
 	public int getId() {
@@ -41,11 +44,11 @@ public class BlogEnArticle {
 		this.content = content;
 	}
 
-	public LocalDateTime getCreatedAt() {
+	public String getCreatedAt() {
 		return createdAt;
 	}
 
-	public void setCreatedAt(LocalDateTime createdAt) {
+	public void setCreatedAt(String createdAt) {
 		this.createdAt = createdAt;
 	}
 	
