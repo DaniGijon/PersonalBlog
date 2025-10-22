@@ -21,7 +21,9 @@
     <table>
 		<c:forEach items="${listArticles}" var="article">
 			<tr>
+				<td>${article.id}</td>
 			    <td>${article.title}</td>
+			    <td>${article.content}</td>
 			    <td>${article.createdAt}</td>
 		    </tr>
 		</c:forEach>

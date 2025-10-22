@@ -5,17 +5,16 @@ import java.time.format.DateTimeFormatter;
 
 public class BlogEnArticle {
 
-	private int lastId = 0;
 	private int id;
 	private String title;
 	private String content;
 	private String createdAt;
-	private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM d, YYYY");
 	
-	public BlogEnArticle(String title, String content) {
-		id = ++id;
+	public BlogEnArticle(int id, String title, String content) {
+		this.id = id;
 		this.title = title;
 		this.content = content;
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM d, YYYY");
 		createdAt = LocalDateTime.now().format(formatter);
 		createdAt = createdAt.substring(0, 1).toUpperCase() + createdAt.substring(1);
 	}
