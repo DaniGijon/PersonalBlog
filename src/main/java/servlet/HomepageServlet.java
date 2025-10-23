@@ -38,16 +38,27 @@ public class HomepageServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		   
+		RequestDispatcher dispatcher;
+		HttpSession session = request.getSession();
+		String myRole = (String) request.getParameter("userRoles");
+		
+		if (myRole.equals("admin")) {
+			session.setAttribute("userRole", myRole);
+			dispatcher = request.getRequestDispatcher("/jsps/admin.jsp");
+		} else {
+			session.setAttribute("userRole", "standard");
+			dispatcher = request.getRequestDispatcher("/jsps/home.jsp");
+		}
+		
 		listArticles = bsLoadArticles.loadArticles();
 		
 	    request.setAttribute("listArticles", listArticles);
 		
-        // Dispatch the request to the JSP page
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/jsps/index.jsp");
         dispatcher.forward(request, response);
-		//response.getWriter().append("Served at: ").append(request.getContextPath());
+        
         listArticles.clear();
+	
+		
 	}
 
 	/**

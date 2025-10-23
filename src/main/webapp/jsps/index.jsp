@@ -10,22 +10,17 @@
 <body>
 	<form id="formLength" action="/PersonalBlog/HomepageServlet" method="GET"">
 		<h3>Personal Blog</h3>
-	
 		<div>
-			<input type="submit" id="blog_submit" name="blog_submit" value="Submit"></input>
+			<label for="userRoles">Choose your role:</label>
+			<select name="userRoles" id="userRoles" form="formLength">
+			  <option value="standard">Standard</option>
+			  <option value="admin">Admin</option>
+			</select>
 		</div>
 		
+		<div>
+			<input type="submit" id="blog_submit" name="blog_submit" value="Continue"></input>
+		</div>
 	</form>
-	
-		
-    <table>
-		<c:forEach items="${listArticles}" var="article">
-			<tr>
-			    <td> <a href="/PersonalBlog/ArticleServlet?idArticle=${article.id}">${article.title}</a></td>
-			    <td>${article.createdAt}</td>
-		    </tr>
-		</c:forEach>
-	</table>
-     
 </body>
 </html>

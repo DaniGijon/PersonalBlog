@@ -7,8 +7,7 @@
 <title>Personal Blog</title>
 </head>
 <body>
-	<h1>${ titleArticleSess }</h1>
-	<h3>${ createdAtArticleSess }</h3>
-	<h5>${ contentArticleSess }</h5>
+	<h3>Personal Blog</h3>
+	<h5>Welcome, ${ userRole } user.</h5>
 </body>
 </html>
