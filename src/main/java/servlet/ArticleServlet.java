@@ -18,18 +18,20 @@ import java.util.List;
 import business.bsLoadArticles;
 import entities.BlogEnArticle;
 
-@WebServlet("/HomepageServlet")
-public class HomepageServlet extends HttpServlet {
+/**
+ * Servlet implementation class ArticleServlet
+ */
+@WebServlet("/ArticleServlet")
+public class ArticleServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	final File folder = new File("/home/konka/eclipse-workspace/PersonalBlog/src/main/webapp/articles");
-	
 	List <BlogEnArticle> listArticles = new ArrayList<>();
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public HomepageServlet() {
+    public ArticleServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -38,16 +40,26 @@ public class HomepageServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		   
-		listArticles = bsLoadArticles.loadArticles();
-		
-	    request.setAttribute("listArticles", listArticles);
-		
-        // Dispatch the request to the JSP page
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/jsps/index.jsp");
+
+	    HttpSession session = request.getSession();
+	    
+	    String idArticle = request.getParameter("idArticle");
+	   
+	    listArticles = bsLoadArticles.loadArticles();
+	    
+	    for (BlogEnArticle article : listArticles) {
+	    	if (idArticle.equals(String.valueOf(article.getId()))) {
+	    		session.setAttribute("titleArticleSess", article.getTitle());
+	    		session.setAttribute("contentArticleSess", article.getContent());
+	    		session.setAttribute("createdAtArticleSess", article.getCreatedAt());
+	    	}
+	    }
+	    
+        String destination = "/jsps/articleDetail.jsp";
+        
+
+        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(destination);
         dispatcher.forward(request, response);
-		//response.getWriter().append("Served at: ").append(request.getContextPath());
-        listArticles.clear();
 	}
 
 	/**
