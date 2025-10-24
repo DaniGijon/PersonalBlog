@@ -43,19 +43,29 @@ public class ArticleServlet extends HttpServlet {
 
 	    HttpSession session = request.getSession();
 	    
+	    String destination = "";
+	    String action = request.getParameter("action");
 	    String idArticle = request.getParameter("idArticle");
 	   
 	    listArticles = bsLoadArticles.loadArticles();
 	    
 	    for (BlogEnArticle article : listArticles) {
 	    	if (idArticle.equals(String.valueOf(article.getId()))) {
+	    		session.setAttribute("idArticleSess", article.getId());
 	    		session.setAttribute("titleArticleSess", article.getTitle());
 	    		session.setAttribute("contentArticleSess", article.getContent());
 	    		session.setAttribute("createdAtArticleSess", article.getCreatedAt());
 	    	}
 	    }
 	    
-        String destination = "/jsps/articleDetail.jsp";
+	    if (action.equals("detail")) {
+	        destination = "/jsps/articleDetail.jsp";
+	    } else if (action.equals("edit")) {
+	        destination = "/jsps/articleEdit.jsp";
+	    } else if (action.equals("delete")) {
+	        destination = "/HomepageServlet";
+	    }
+	    
         
 
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(destination);

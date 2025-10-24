@@ -38,26 +38,38 @@ public class HomepageServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher dispatcher;
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/jsps/index.jsp");
 		HttpSession session = request.getSession();
-		String myRole = (String) request.getParameter("userRoles");
 		
-		if (myRole.equals("admin")) {
-			session.setAttribute("userRole", myRole);
-			dispatcher = request.getRequestDispatcher("/jsps/admin.jsp");
+		String myRole = "";
+		
+		String [] user_logout = request.getParameterValues("user_logout");
+		if (null != user_logout && user_logout.length > 0) {
+			session.removeAttribute("userRole");
 		} else {
-			session.setAttribute("userRole", "standard");
-			dispatcher = request.getRequestDispatcher("/jsps/home.jsp");
+		
+			if (null != session.getAttribute("userRole")) {
+				myRole = (String) session.getAttribute("userRole");
+			} else {
+				myRole = (String) request.getParameter("userRoles");	
+			}
+			
+			if (myRole.equals("admin")) {
+				session.setAttribute("userRole", myRole);
+				dispatcher = request.getRequestDispatcher("/jsps/admin.jsp");
+			} else {
+				session.setAttribute("userRole", "standard");
+				dispatcher = request.getRequestDispatcher("/jsps/home.jsp");
+			}
+			
+			listArticles = bsLoadArticles.loadArticles();
+			
+		    request.setAttribute("listArticles", listArticles);
 		}
-		
-		listArticles = bsLoadArticles.loadArticles();
-		
-	    request.setAttribute("listArticles", listArticles);
 		
         dispatcher.forward(request, response);
         
         listArticles.clear();
-	
 		
 	}
 

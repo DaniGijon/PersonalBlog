@@ -8,17 +8,20 @@
 <title>Personal Blog</title>
 </head>
 <body>
+	<form id="formLength" action="/PersonalBlog/HomepageServlet" method="GET"">
 		<h3>Personal Blog</h3>
-		<h5>Welcome, ${ userRole } user.</h5>
 		<table>
 			<c:forEach items="${listArticles}" var="article">
 				<tr>
-				    <td> <a href="/PersonalBlog/ArticleServlet?idArticle=${article.id}">${article.title}</a></td>
+				    <td> <a href="/PersonalBlog/ArticleServlet?idArticle=${article.id}&action=detail">${article.title}</a></td>
 				    <td>${article.createdAt}</td>
 			    </tr>
 			</c:forEach>
 		</table>
 		
-		<button type="button" name="back" onclick="history.back()">Logout</button>
+		<div>
+			<input type="submit" id="user_logout" name="user_logout" value="Logout"></input>
+		</div>
+	</form>
 </body>
 </html>
