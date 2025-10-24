@@ -18,5 +18,7 @@
 			    </tr>
 			</c:forEach>
 		</table>
+		
+		<button type="button" name="back" onclick="history.back()">Logout</button>
 </body>
 </html>

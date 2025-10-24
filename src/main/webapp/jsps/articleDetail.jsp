@@ -10,5 +10,7 @@
 	<h1>${ titleArticleSess }</h1>
 	<h3>${ createdAtArticleSess }</h3>
 	<h5>${ contentArticleSess }</h5>
+	
+	<button type="button" name="back" onclick="history.back()">Go back</button>
 </body>
 </html>
