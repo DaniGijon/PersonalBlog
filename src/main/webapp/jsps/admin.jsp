@@ -10,7 +10,7 @@
 <body>
 	<form id="formLength" action="/PersonalBlog/HomepageServlet" method="GET"">
 		<h3>Personal Blog</h3>
-		<a href="/PersonalBlog/ArticleServlet?action=add">+ Add</a>
+		<a href="/PersonalBlog/ArticleServlet?action=new">+ Add</a>
 		<table>
 			<c:forEach items="${listArticles}" var="article">
 				<tr>
