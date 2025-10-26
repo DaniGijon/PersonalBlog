@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import business.bsLoadArticles;
+import business.bsSaveArticles;
 import entities.BlogEnArticle;
 
 /**
@@ -47,18 +48,16 @@ public class ArticleServlet extends HttpServlet {
 	    String action = request.getParameter("action");
 	    String idArticle = ""; 
 	    
+	    listArticles = bsLoadArticles.loadArticles();
+	    
 	    String [] newArticle = request.getParameterValues("newArticle_submit");
-		if (null != newArticle && newArticle.length > 0) {
+		if (null != newArticle && newArticle.length > 0) { //Add new article
 			String newArticleTitle =  request.getParameter("newArticleTitle");
 			String newArticleContent =  request.getParameter("newArticleContent");
+			int newArticleId = bsSaveArticles.getNewId(listArticles);
+			bsSaveArticles.addArticle(new BlogEnArticle(newArticleId, newArticleTitle, newArticleContent));
  	        destination = "/HomepageServlet";
- 	        System.out.println("added");
- 	        System.out.println(newArticleTitle);
- 	        System.out.println(newArticleContent);
-		} else {
-
-		    listArticles = bsLoadArticles.loadArticles();
-		    
+		} else {		    
 		    if (action.equals("new")) {
 		        destination = "/jsps/articleNew.jsp";
 		    } else {
