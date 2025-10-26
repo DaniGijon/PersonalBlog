@@ -46,30 +46,42 @@ public class ArticleServlet extends HttpServlet {
 	    String destination = "";
 	    String action = request.getParameter("action");
 	    String idArticle = ""; 
-	   
-	    listArticles = bsLoadArticles.loadArticles();
 	    
-	    if (action.equals("new")) {
-	        destination = "/jsps/articleNew.jsp";
-	    } else {
-	    	idArticle = request.getParameter("idArticle");
-	    	for (BlogEnArticle article : listArticles) {
-	 	    	if (idArticle.equals(String.valueOf(article.getId()))) {
-	 	    		session.setAttribute("idArticleSess", article.getId());
-	 	    		session.setAttribute("titleArticleSess", article.getTitle());
-	 	    		session.setAttribute("contentArticleSess", article.getContent());
-	 	    		session.setAttribute("createdAtArticleSess", article.getCreatedAt());
-	 	    	}
-	 	    }
-	 	    
-	 	    if (action.equals("detail")) {
-	 	        destination = "/jsps/articleDetail.jsp";
-	 	    } else if (action.equals("edit")) {
-	 	        destination = "/jsps/articleEdit.jsp";
-	 	    } else if (action.equals("delete")) {
-	 	        destination = "/HomepageServlet";
-	 	    }
-	    }      
+	    String [] newArticle = request.getParameterValues("newArticle_submit");
+		if (null != newArticle && newArticle.length > 0) {
+			String newArticleTitle =  request.getParameter("newArticleTitle");
+			String newArticleContent =  request.getParameter("newArticleContent");
+ 	        destination = "/HomepageServlet";
+ 	        System.out.println("added");
+ 	        System.out.println(newArticleTitle);
+ 	        System.out.println(newArticleContent);
+		} else {
+
+		    listArticles = bsLoadArticles.loadArticles();
+		    
+		    if (action.equals("new")) {
+		        destination = "/jsps/articleNew.jsp";
+		    } else {
+		    	idArticle = request.getParameter("idArticle");
+		    	for (BlogEnArticle article : listArticles) {
+		 	    	if (idArticle.equals(String.valueOf(article.getId()))) {
+		 	    		session.setAttribute("idArticleSess", article.getId());
+		 	    		session.setAttribute("titleArticleSess", article.getTitle());
+		 	    		session.setAttribute("contentArticleSess", article.getContent());
+		 	    		session.setAttribute("createdAtArticleSess", article.getCreatedAt());
+		 	    	}
+		 	    }
+		 	    
+		 	    if (action.equals("detail")) {
+		 	        destination = "/jsps/articleDetail.jsp";
+		 	    } else if (action.equals("edit")) {
+		 	        destination = "/jsps/articleEdit.jsp";
+		 	    } else if (action.equals("delete")) {
+		 	        destination = "/HomepageServlet";
+		 	    }
+		    }      
+		}
+	   
 
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(destination);
         dispatcher.forward(request, response);
