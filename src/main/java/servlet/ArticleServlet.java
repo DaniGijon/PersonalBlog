@@ -51,13 +51,27 @@ public class ArticleServlet extends HttpServlet {
 	    listArticles = bsLoadArticles.loadArticles();
 	    
 	    String [] newArticle = request.getParameterValues("newArticle_submit");
+	    String [] updateArticle = request.getParameterValues("updateArticle_submit");
+
 		if (null != newArticle && newArticle.length > 0) { //Add new article
 			String newArticleTitle =  request.getParameter("newArticleTitle");
 			String newArticleContent =  request.getParameter("newArticleContent");
 			int newArticleId = bsSaveArticles.getNewId(listArticles);
 			bsSaveArticles.addArticle(new BlogEnArticle(newArticleId, newArticleTitle, newArticleContent));
  	        destination = "/HomepageServlet";
-		} else {		    
+		} else if (null != updateArticle && updateArticle.length > 0) { //Edit article
+			String updateArticleTitle =  request.getParameter("updateArticleTitle");
+			String updateArticleContent =  request.getParameter("updateArticleContent");
+			int updateArticleId =  (int) session.getAttribute("idArticleSess");
+			for (BlogEnArticle article : listArticles) {
+	 	    	if (updateArticleId == article.getId()) {
+	 	    		bsSaveArticles.deleteArticle(new BlogEnArticle(article.getId(), article.getTitle(), article.getContent()));
+	 	    		bsSaveArticles.addArticle(new BlogEnArticle(Integer.valueOf(updateArticleId), updateArticleTitle, updateArticleContent));
+	 	 	      
+	 	    	}
+	 	    }
+ 	        destination = "/HomepageServlet";
+		}	else {		    
 		    if (action.equals("new")) {
 		        destination = "/jsps/articleNew.jsp";
 		    } else {
@@ -76,7 +90,13 @@ public class ArticleServlet extends HttpServlet {
 		 	    } else if (action.equals("edit")) {
 		 	        destination = "/jsps/articleEdit.jsp";
 		 	    } else if (action.equals("delete")) {
-		 	        destination = "/HomepageServlet";
+		 	    	for (BlogEnArticle article : listArticles) {
+			 	    	if (Integer.valueOf(request.getParameter("idArticle")) == article.getId()) {
+			 	    		bsSaveArticles.deleteArticle(new BlogEnArticle(article.getId(), article.getTitle(), article.getContent()));
+			 	    		
+			 	    	}
+			 	    }
+		 	    	destination = "/HomepageServlet";
 		 	    }
 		    }      
 		}

@@ -11,7 +11,7 @@ import entities.BlogEnArticle;
 
 public class bsSaveArticles {
 
-	static final File folder = new File("/home/konka/eclipse-workspace/PersonalBlog/src/main/webapp/articles");
+	static final File folder = new File("/home/konka/eclipse-workspace/PersonalBlog/src/main/webapp/articles"); //edit path
 	private static final DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
 	
 	public static int getNewId (List <BlogEnArticle> listArticles) {
@@ -44,45 +44,12 @@ public class bsSaveArticles {
 	    } 
 	}
 	
-	public void export (String filename) {
-//		try {
-//	        FileWriter writer = new FileWriter(filename + ".csv");
-//
-//	        writer.append("ID");
-//	        writer.append(',');
-//	        writer.append("Description");
-//	        writer.append(',');
-//	        writer.append("Amount");
-//	        writer.append(',');
-//	        writer.append("Category");
-//	        writer.append(',');
-//	        writer.append("CreatedAt");
-//	        writer.append(',');
-//	        writer.append("ModifiedAt");
-//	        writer.append('\n');
-//
-//	        for (Expense expense : listExpenses) {
-//	        	writer.append(String.valueOf(expense.getId()));
-//		        writer.append(',');
-//		        writer.append(expense.getDescription());
-//		        writer.append(',');
-//		        writer.append(String.valueOf(expense.getAmount()));
-//		        writer.append(',');
-//		        writer.append(expense.getCategory());
-//		        writer.append(',');
-//		        writer.append(expense.getCreatedAt().format(formatter));
-//		        writer.append(',');
-//		        writer.append(expense.getModifiedAt().format(formatter));
-//		        writer.append('\n');
-//	        }
-//	        
-//	        writer.flush();
-//	        writer.close();
-//	    }
-//		
-//	    catch(IOException e)
-//	    {
-//	         e.printStackTrace();
-//	    } 
+	public static void deleteArticle (BlogEnArticle article) {
+		File articleToDelete = new File (folder + "/" + article.getTitle() + ".JSON");
+		if (articleToDelete.delete()) { 
+		      System.out.println("Deleted the file: " + articleToDelete.getName());
+		    } else {
+		      System.out.println("Failed to delete the file.");
+		    } 
 	}
 }

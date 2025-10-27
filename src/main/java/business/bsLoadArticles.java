@@ -40,7 +40,7 @@ public class bsLoadArticles {
 		return storedArticles;
 	}
 	
-	public static BlogEnArticle convertJSONtoBlogEnArticle (String articleJSON) {
+	private static BlogEnArticle convertJSONtoBlogEnArticle (String articleJSON) {
 		articleJSON = articleJSON.replace("{", "").replace("}", "").replace("\"", "");
         String[] json1 = articleJSON.split(",");
 
